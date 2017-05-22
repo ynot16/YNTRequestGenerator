@@ -5,36 +5,51 @@
 		<label name="url">request URL: </label><input type="text"></br>
 		<label name="parameters">request parameters: </label><input type="text">
 		<h3>setup your response</h3>
-		<label name="url">response type: </label>
-		<button>string +</button>
-		<button>number +</button>
-		<button>bool +</button>
-		<button>array +</button>
-		<button>map +</button>
-		<ul>
-			<li v-for="todo in todos">
-				{{ todo }}
-			</li>
-		</ul>
+		<table id="data-table">
+			<thead>
+				<tr>
+					<th>key</th>
+					<th>type</th>
+					<th>value</th>
+					<th>times</th>
+				</tr>
+			</thead>
+			<tbody>
+				<type-row 
+					v-for="(responseRow, index) in responseDic"
+					:key="responseRow"
+					:keyname="responseRow.keyname"
+					:dataType="responseRow.dataType"
+					:value="responseRow.value"
+					:times="responseRow.times"
+					@addNewRow="addNewData"
+					@remove="responseDic.splice(index, 1)"
+					></type-row>
+			</tbody>
+		</table>
 		</br>
-		<button @click="submit">submit</button>
+		<button @click="submitRequest">submit</button>
 	</div>
 </template>
 
 <script>
+	import TypeRow from './TypeRow';
+
 	export default {
 		name: 'generator',
-		data() {
+		data: function() {
 			return {
-				todos: [
-					"first",
-					"second",
-					"third",
+				responseDic: [
+					{"keyname": "testKey", "dataType": "testDataType", "value": "testValue", "times": "2"},
 				],
 			};
 		},
 		methods: {
-			submit: function (event) {
+			addNewData() {
+				this.responseDic.push('second');
+			},
+
+			submitRequest() {
 				// body...
 				function requestStringify() {
 					const value = "hello";
@@ -59,6 +74,9 @@
 				alert(requestString);
 			},
 		},
+		components: {
+			'type-row': TypeRow
+		}
 	};
 </script>
 
