@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # yntautorequest
 
 > awesome request&response  generator
@@ -25,3 +26,7 @@ npm test
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+=======
+# YNTRequestGenerator
+awesome request&amp;response generator
+>>>>>>> 415ee638aeef1be27e95952d617aa9b5769ba436
