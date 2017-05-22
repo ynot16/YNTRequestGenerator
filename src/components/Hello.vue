@@ -25,7 +25,7 @@ export default {
   name: 'hello',
   data() {
     return {
-      msg: 'Awesome Request Generator',
+      msg: 'Awesome Request Generator!',
     };
   },
 };
