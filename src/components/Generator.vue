@@ -18,10 +18,13 @@
 				<type-row 
 					v-for="(responseRow, index) in responseDic"
 					:key="responseRow"
+					:parentname="responseRow.parentname"
 					:keyname="responseRow.keyname"
 					:dataType="responseRow.dataType"
 					:value="responseRow.value"
 					:times="responseRow.times"
+					:padding="responseRow.padding"
+					:isArrayItem="responseRow.isArrayItem"
 					@addNewRow="addNewData"
 					@remove="responseDic.splice(index, 1)"
 					></type-row>
@@ -40,13 +43,21 @@
 		data: function() {
 			return {
 				responseDic: [
-					{"keyname": "testKey", "dataType": "testDataType", "value": "testValue", "times": "2"},
+					{"parentname": "", "keyname": "Root", "dataType": "Dictionary", "value": "1 items", "times": "1", "isArrayItem": false, "padding": 0},
 				],
 			};
 		},
 		methods: {
-			addNewData() {
-				this.responseDic.push('second');
+			addNewData(preDataType, parentname, newPadding) {
+				const newRow = {};
+				if (preDataType === "Array") {
+					newRow.isArrayItem = true;
+					newRow.keyname = "New Item";
+				};
+				newRow.padding = newPadding
+				newRow.dataType = "String";
+				newRow.parentname = parentname;
+				this.responseDic.push(newRow);
 			},
 
 			submitRequest() {
