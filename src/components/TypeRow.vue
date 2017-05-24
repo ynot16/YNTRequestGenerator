@@ -44,25 +44,34 @@
 				],
 			};
 		},
+		props: ['parentname', 'keyname', 'dataType', 'value', 'times', 'isArrayItem', 'padding'],
 		computed: {
 			isCollection() {
 				return this.selectedDataType === "Dictionary" || this.selectedDataType === "Array";
 			},
 		},
-		props: ['parentname', 'keyname', 'dataType', 'value', 'times', 'isArrayItem', 'padding'],
+		watch: {
+			selectedDataType(newType, oldType) {
+				if (newType !== "Dictionary" && newType !== "Array" && (oldType === "Array" || oldType === "Dictionary")) {
+					this.$emit('removeChild', this.keyname);
+				};
+			} ,
+		},
 		methods: {
 			expandRow() {
 
 			},
 
 			addNewRow() {
-				console.log(this.padding);
-				this.$emit('addNewRow', this.selectedDataType, this.isCollection ? this.keyname : this.parentname, this.isCollection ? this.padding + 20 : this.padding);
+				const childIsArrayItem = ((this.isArrayItem && this.selectedDataType !== "Dictionary") || this.selectedDataType === "Array");
+				this.$emit('addNewRow', childIsArrayItem, this.isCollection ? this.keyname : this.parentname, this.isCollection ? this.padding + 20 : this.padding);
 			},
 
 			removeRow() {
 				this.$emit('remove');
-			}
+			},
+
+
 		}
 	}
 </script>

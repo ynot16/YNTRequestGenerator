@@ -27,6 +27,7 @@
 					:isArrayItem="responseRow.isArrayItem"
 					@addNewRow="addNewData"
 					@remove="responseDic.splice(index, 1)"
+					@removeChild="removeCollectionChild"
 					></type-row>
 			</tbody>
 		</table>
@@ -48,9 +49,9 @@
 			};
 		},
 		methods: {
-			addNewData(preDataType, parentname, newPadding) {
+			addNewData(isArrayItem, parentname, newPadding) {
 				const newRow = {};
-				if (preDataType === "Array") {
+				if (isArrayItem) {
 					newRow.isArrayItem = true;
 					newRow.keyname = "New Item";
 				};
@@ -58,6 +59,17 @@
 				newRow.dataType = "String";
 				newRow.parentname = parentname;
 				this.responseDic.push(newRow);
+			},
+
+			removeCollectionChild(parentname) {
+				for(let i=0, flag=true, len=this.responseDic.length;i<len;flag ? i++ : i){
+				   if(this.responseDic[i]&&this.responseDic[i].parentname==parentname){
+				        this.responseDic.splice(i,1);
+				        flag = false;
+				    }else {
+				        flag = true;
+				    }
+				}
 			},
 
 			submitRequest() {
